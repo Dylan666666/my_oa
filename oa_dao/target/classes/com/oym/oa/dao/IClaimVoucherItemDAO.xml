@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oym.oa.dao.IClaimVoucherItemDAO">
+
+    <resultMap id="claimVoucherItemRM" type="ClaimVoucherItem">
+        <id property="id" column="id" javaType="integer"></id>
+        <result property="claimVoucherId" column="claim_voucher_id" javaType="Integer"></result>
+        <result property="item" column="item" javaType="String"></result>
+        <result property="amount" column="amount" javaType="Double"></result>
+        <result property="comment" column="comment" javaType="String"></result>
+    </resultMap>
+
+   <insert id="insert" parameterType="ClaimVoucherItem">
+       INSERT INTO
+        claim_voucher_item(claim_voucher_id,item,amount,comment)
+       VALUES
+       (#{claimVoucherId},#{item},#{amount},#{comment})
+   </insert>
+
+    <update id="update" parameterType="ClaimVoucherItem">
+        UPDATE
+        claim_voucher_item
+        SET
+        claim_voucher_id=#{claimVoucherId},item=#{item},amount=#{amount},comment=#{comment}
+        WHERE
+        id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM
+        claim_voucher_item
+        WHERE
+        id=#{id}
+    </delete>
+
+    <select id="selectByClaimVoucher" resultMap="claimVoucherItemRM">
+        SELECT
+        *
+        FROM
+        claim_voucher_item
+        WHERE
+        claim_voucher_id=#{cvid}
+        ORDER BY
+        id
+    </select>
+
+
+</mapper>

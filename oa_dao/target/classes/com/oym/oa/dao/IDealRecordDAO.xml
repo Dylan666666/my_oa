@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oym.oa.dao.IDealRecordDAO">
+
+    <resultMap id="dealRecordRM" type="DealRecord">
+        <id property="id" column="id" javaType="integer"></id>
+        <result property="claimVoucherId" column="claim_voucher_id" javaType="Integer"></result>
+        <result property="dealSn" column="deal_sn" javaType="String"></result>
+        <result property="dealTime" column="deal_time" javaType="java.util.Date"></result>
+        <result property="dealWay" column="deal_way" javaType="String"></result>
+        <result property="dealResult" column="deal_result" javaType="String"></result>
+        <result property="comment" column="comment" javaType="String"></result>
+        <association property="dealer" column="deal_sn" javaType="Employee">
+            <result property="name" column="ename" javaType="String"></result>
+            <result property="post" column="epost" javaType="String"></result>
+        </association>
+    </resultMap>
+
+   <insert id="insert" parameterType="DealRecord">
+       INSERT INTO
+        deal_record(claim_voucher_id,deal_sn,deal_time,deal_way,deal_result,comment)
+        VALUES
+        (#{claimVoucherId},#{dealSn},#{dealTime},#{dealWay},#{dealResult},#{comment})
+   </insert>
+
+   <select id="selectByClaimVoucher" resultMap="dealRecordRM">
+       SELECT
+       d.*,e.name enam,e.post epost
+        FROM
+        deal_record d
+        LEFT JOIN
+         employee e
+        ON
+         d.deal_sn = e.sn
+        WHERE
+         d.claim_voucher_id = #{cvid}
+        ORDER BY
+        d.deal_time;
+   </select>
+
+</mapper>
