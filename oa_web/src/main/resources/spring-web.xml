@@ -21,7 +21,7 @@
         <property name="prefix" value="/WEB-INF/pages/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-fdafdafdasfafdasfdasfasf
+
     <!--配置拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
